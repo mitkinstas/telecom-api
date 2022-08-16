@@ -1,24 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useCallback } from "react";
+
+import "./App.css";
+import "antd/dist/antd.css";
+
+import Tabs from "./components/Tabs";
+import { Tab } from "./components/Tabs/types";
+import ApiRequest from "./components/ApiRequest";
+import { API_SETTINGS, API_VIEW } from "./mocks";
+
+const DEFAULT_TABS: Tab<string>[] = [
+  { value: "number_verification", label: "Number Verification" },
+  { value: "number_insight", label: "Number Insight" },
+  { value: "send_an_sms", label: "Send an SMS" },
+];
 
 function App() {
+  const [currentTab, setCurrentTab] = useState(DEFAULT_TABS[0].value);
+
+  const handleChangeTab = useCallback(
+    (value: typeof currentTab) => setCurrentTab(value),
+    []
+  );
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Tabs
+        tabs={DEFAULT_TABS}
+        tabValue={currentTab}
+        onChange={handleChangeTab}
+      />
+
+      {API_VIEW?.[currentTab]}
+
+      <ApiRequest apiSettings={API_SETTINGS?.[currentTab]} />
     </div>
   );
 }

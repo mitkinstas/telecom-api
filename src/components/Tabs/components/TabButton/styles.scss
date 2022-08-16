@@ -1,0 +1,28 @@
+.tabs-button {
+  border: none;
+  cursor: pointer;
+  margin: 0 32px 0 0;
+  padding: 12px 16px;
+  position: relative;
+  background-color: transparent;
+  position: relative;
+}
+
+.tabs-button:not(:last-child) {
+  margin-right: 15px;
+}
+
+.tabs-button:hover {
+  color: var(--active-tab-color);
+}
+
+.tabs-button-active::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--active-tab-color);
+}
